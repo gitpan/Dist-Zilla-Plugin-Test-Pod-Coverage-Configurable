@@ -1,7 +1,7 @@
 package Dist::Zilla::Plugin::Test::Pod::Coverage::Configurable;
-# git description: 8e37f5f
-$Dist::Zilla::Plugin::Test::Pod::Coverage::Configurable::VERSION = '0.01';
+# git description: v0.01-4-gfc650a6
 
+$Dist::Zilla::Plugin::Test::Pod::Coverage::Configurable::VERSION = '0.02';
 use strict;
 use warnings;
 use namespace::autoclean;
@@ -81,6 +81,12 @@ my $head = <<'EOF';
 
 use Test::Pod::Coverage 1.08;
 use Test::More 0.88;
+
+BEGIN {
+    if ( $] <= 5.008008 ) {
+        plan skip_all => 'These tests require Pod::Coverage::TrustPod, which only works with Perl 5.8.9+';
+    }
+}
 use Pod::Coverage::TrustPod;
 EOF
 
@@ -197,15 +203,13 @@ __END__
 
 =pod
 
-=encoding UTF-8
-
 =head1 NAME
 
 Dist::Zilla::Plugin::Test::Pod::Coverage::Configurable - dzil pod coverage tests with configurable parameters
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -226,6 +230,8 @@ configurable. The coverage test is generated as F<xt/release/pod-coverage.t>.
 
 L<Test::Pod::Coverage> C<1.08>, L<Test::More> C<0.88>, and
 L<Pod::Coverage::TrustPod> will be added as C<develop requires> dependencies.
+
+=encoding UTF-8
 
 =head1 NAME
 
